@@ -13,9 +13,9 @@
 /* VOICE: a trader's working tool — crisp, quiet, no decoration.
    IDEA: the printed pivot ladder card from pivotpointcalculator.com, light paper, black ink.
    PICTURE: the ladder itself, large, drawn on canvas so screen and saved image are identical.
-   COLOUR and TYPE: white paper, black ink #0b0b0b, red #e02424 / orange #e07b00 / green #16a34a badges; Schibsted Grotesk.
+   COLOUR and TYPE: white paper, black ink #0b0b0b, red #e02424 / blue #1565C0 / green #16a34a badges; Schibsted Grotesk.
    LAYOUT: ladder left, inputs right; stacks below 700px as inputs, ladder. */
-:root{color-scheme:light;--bg:#f4f5f7;--paper:#fff;--ink:#0b0b0b;--muted:#4b5563;--line:#d9dde3;--red:#e02424;--org:#e07b00;--grn:#16a34a}
+:root{color-scheme:light;--bg:#f4f5f7;--paper:#fff;--ink:#0b0b0b;--muted:#4b5563;--line:#d9dde3;--red:#e02424;--org:#1565C0;--grn:#16a34a}
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Schibsted Grotesk",Arial,sans-serif;overflow-x:clip}
 .wrap{max-width:1000px;margin:0 auto;padding:clamp(18px,3vw,40px) max(4vw,14px)}
@@ -114,7 +114,7 @@ function draw(){
     x.textBaseline='middle';
     if(r.k){
       x.fillStyle='#0b0b0b';x.font='900 40px "Schibsted Grotesk",Arial';x.textAlign='left';x.fillText(r.k,6,y+RH/2+1);
-      const col=r.k==='PP'?'#e07b00':r.k[0]==='R'?'#e02424':'#16a34a';
+      const col=r.k==='PP'?'#1565C0':r.k[0]==='R'?'#e02424':'#16a34a';
       x.font='800 32px "Schibsted Grotesk",Arial';
       const bh=44;
       x.fillStyle=col;x.beginPath();x.roundRect(BX,y+(RH-bh)/2,BW,bh,6);x.fill();
