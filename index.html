@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FHAT Pivot Ladder</title>
-<meta name="description" content="Free Classic Pivot Point Calculator with midpoints. 免费 Classic 枢轴位计算器（含中点），输入前一交易日的最高、最低、收盘即可得到 R3–S3。">
+<title>FHAT Pivot Ladder — Free Pivot Point Calculator</title>
+<meta name="description" content="Free Classic Pivot Point Calculator with midpoints. Enter the prior session's High, Low and Close to get R3–S3 and copy a clean ladder card.">
 <meta property="og:title" content="FHAT Pivot Ladder — Free Pivot Point Calculator">
 <meta property="og:description" content="Classic pivot levels R3–S3 with midpoints, one-click image copy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,35 +46,35 @@ td{padding:6px 4px;border-bottom:1px solid var(--line)}td:last-child{text-align:
 <body>
 <div class="wrap">
   <h1>Pivot Ladder</h1>
-  <p class="sub">Classic 枢轴位，带中点。输入前一交易日常规盘的最高、最低、收盘。</p>
+  <p class="sub"><strong style="color:#0b0b0b">Free Classic Pivot Point Calculator with Midpoints</strong><br>Enter the prior regular session's High, Low and Close.</p>
   <div class="grid">
     <div class="card ladder">
-      <canvas id="cv" aria-label="枢轴位阶梯图"></canvas>
-      <img id="snap" alt="枢轴位图片（长按或右键可保存）" style="display:none;max-width:100%">
+      <canvas id="cv" aria-label="Pivot ladder chart"></canvas>
+      <img id="snap" alt="Pivot ladder image (right-click or long-press to save)" style="display:none;max-width:100%">
       <div class="row">
-        <button type="button" id="copyImg">复制图片</button>
-        <button type="button" class="ghost" id="copyTxt">复制数值</button>
-        <button type="button" class="ghost" id="showImg">显示可保存图片</button>
+        <button type="button" id="copyImg">Copy image</button>
+        <button type="button" class="ghost" id="copyTxt">Copy values</button>
+        <button type="button" class="ghost" id="showImg">Show saveable image</button>
       </div>
       <div id="msg" role="status"></div>
     </div>
     <div class="card">
       <form id="f" autocomplete="off">
-        <label>代码<input id="sym" value="SOXL"></label>
-        <label>适用交易日<input id="dt" value="26-11-23"></label>
-        <label>前日最高 H<input id="h" inputmode="decimal" value="42.57"></label>
-        <label>前日最低 L<input id="l" inputmode="decimal" value="29.82"></label>
-        <label>前日收盘 C<input id="c" inputmode="decimal" value="30.88"></label>
-        <label>小数位<select id="dp"><option>2</option><option>3</option></select></label>
-        <label class="chk full"><input type="checkbox" id="ext">显示 R4 / S4</label>
-        <label class="chk full"><input type="checkbox" id="hdr" checked>图上显示代码与日期</label>
-        <div class="row full"><button type="button" class="ghost" id="swap">清空</button></div>
+        <label>Ticker<input id="sym" value="SOXL"></label>
+        <label>Trading date<input id="dt" value="26-11-23"></label>
+        <label>Prior high (H)<input id="h" inputmode="decimal" value="42.57"></label>
+        <label>Prior low (L)<input id="l" inputmode="decimal" value="29.82"></label>
+        <label>Prior close (C)<input id="c" inputmode="decimal" value="30.88"></label>
+        <label>Decimals<select id="dp"><option>2</option><option>3</option></select></label>
+        <label class="chk full"><input type="checkbox" id="ext">Show R4 / S4</label>
+        <label class="chk full"><input type="checkbox" id="hdr" checked>Show ticker, date and logo on card</label>
+        <div class="row full"><button type="button" class="ghost" id="swap">Clear</button></div>
       </form>
       <table id="tb"></table>
-      <p class="note">PP = (H + L + C) ÷ 3；R1 = 2PP − L，S1 = 2PP − H；R2 / S2 = PP ± (H − L)；R3 / S3 = PP ± 2(H − L)；R4 / S4 = PP ± 3(H − L)。中点为相邻两档的平均。示例数据为 SOXL 11-20 常规盘。</p>
+      <p class="note">PP = (H + L + C) ÷ 3; R1 = 2PP − L, S1 = 2PP − H; R2 / S2 = PP ± (H − L); R3 / S3 = PP ± 2(H − L); R4 / S4 = PP ± 3(H − L). Each midpoint is the average of two adjacent levels. Sample data: SOXL regular session, Nov 20, 2026.</p>
     </div>
   </div>
-  <p class="note" style="text-align:center;margin-top:24px">仅供计算参考，不构成投资建议。For reference only; not investment advice. © FHAT Project</p>
+  <p class="note" style="text-align:center;margin-top:24px">For reference only; not investment advice. © FHAT Project</p>
 </div>
 <script>
 {
@@ -105,7 +105,7 @@ function draw(){
     x.font='700 17px "Schibsted Grotesk",Arial';x.fillStyle='#333';x.fillText($('dt').value,14,54);
     if(LOGO.complete&&LOGO.naturalWidth){const lh=HH-14,lw2=lh*LOGO.naturalWidth/LOGO.naturalHeight;x.drawImage(LOGO,W-10-lw2,7,lw2,lh)}
     x.fillStyle='#d9dde3';x.fillRect(0,HH-1,W,1)}
-  if(!rows.length){x.fillStyle='#b91c1c';x.font='700 16px Arial';x.fillText('请输入有效的 H / L / C',14,top+40);return}
+  if(!rows.length){x.fillStyle='#b91c1c';x.font='700 16px Arial';x.fillText('Enter a valid H / L / C',14,top+40);return}
   rows.forEach((r,i)=>{
     const y=top+i*RH;
     x.fillStyle=r.k?'#ffffff':'#f6f7f9';x.fillRect(0,y,W,RH);
@@ -124,7 +124,7 @@ function draw(){
     x.textAlign='left';
   });
   x.strokeStyle='#000';x.lineWidth=3;x.strokeRect(1.5,1.5,W-3,Ht-3);
-  $('tb').innerHTML=rows.map(r=>`<tr><td>${r.k||'中点'}</td><td>${r.t}</td></tr>`).join('');
+  $('tb').innerHTML=rows.map(r=>`<tr><td>${r.k||'Mid'}</td><td>${r.t}</td></tr>`).join('');
   $('snap').src=cv.toDataURL('image/png');save();
 }
 const msg=(t,bad)=>{$('msg').textContent=t;$('msg').className=bad?'err':''};
@@ -132,10 +132,10 @@ $('f').addEventListener('input',draw);$('f').addEventListener('change',draw);
 $('swap').addEventListener('click',()=>{['h','l','c'].forEach(k=>$(k).value='');draw();$('h').focus()});
 $('copyTxt').addEventListener('click',async()=>{
   const t=`${$('sym').value.toUpperCase()} ${$('dt').value}\n`+rows.map(r=>(r.k||'  ')+' '+r.t).join('\n');
-  try{await navigator.clipboard.writeText(t);msg('数值已复制')}catch(e){msg('浏览器不允许复制，请使用下方数值表',true)}});
+  try{await navigator.clipboard.writeText(t);msg('Values copied')}catch(e){msg('Copy blocked by the browser; use the table below',true)}});
 $('copyImg').addEventListener('click',async()=>{
-  try{const b=await new Promise(r=>$('cv').toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);msg('图片已复制，可直接粘贴')}
-  catch(e){$('snap').style.display='block';msg('此处不支持复制图片，已显示图片：右键或长按保存',true)}});
+  try{const b=await new Promise(r=>$('cv').toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);msg('Image copied — paste it anywhere')}
+  catch(e){$('snap').style.display='block';msg('Image copy not supported here; right-click or long-press the image below to save',true)}});
 $('showImg').addEventListener('click',()=>{const s=$('snap');s.style.display=s.style.display==='none'?'block':'none'});
 (document.fonts?document.fonts.ready:Promise.resolve()).then(draw);draw();
 }
