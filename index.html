@@ -75,6 +75,7 @@ td{padding:6px 4px;border-bottom:1px solid var(--line)}td:last-child{text-align:
     </div>
   </div>
   <p class="note" style="text-align:center;margin-top:24px">For reference only; not investment advice. © FHAT Project</p>
+  <p class="note" id="gcStats" style="text-align:center;margin-top:6px;display:none"></p>
 </div>
 <script>
 {
@@ -140,6 +141,22 @@ $('copyImg').addEventListener('click',async()=>{
 $('showImg').addEventListener('click',()=>{const s=$('snap');s.style.display=s.style.display==='none'?'block':'none'});
 (document.fonts?document.fonts.ready:Promise.resolve()).then(draw);draw();
 }
+
+// GoatCounter: visits and calculations (only on the public site)
+(function(){
+  const GC='https://fhatpivot.goatcounter.com';
+  if(location.hostname!=='fhattrading.github.io')return;
+  const sc=document.createElement('script');sc.async=true;sc.src='https://gc.zgo.at/count.js';sc.dataset.goatcounter=GC+'/count';document.head.appendChild(sc);
+  const ev=(path,title)=>{let n=0;const t=setInterval(()=>{if(window.goatcounter&&window.goatcounter.count){clearInterval(t);window.goatcounter.count({path:path,title:title,event:true})}else if(++n>40)clearInterval(t)},250)};
+  let done=false;
+  $('f').addEventListener('change',()=>{if(done)return;const v=['h','l','c'].map(k=>parseFloat($(k).value));if(v.every(x=>isFinite(x)&&x>0)){done=true;ev('calculate','Calculate')}});
+  $('copyImg').addEventListener('click',()=>ev('copy-image','Copy image'));
+  $('copyTxt').addEventListener('click',()=>ev('copy-values','Copy values'));
+  const get=p=>fetch(GC+'/counter/'+encodeURIComponent(p)+'.json').then(r=>r.ok?r.json():null).catch(()=>null);
+  Promise.all([get('TOTAL'),get('calculate')]).then(([a,b])=>{
+    if(!a)return;let t='Visits: '+a.count;if(b&&b.count)t+=' · Calculations: '+b.count;
+    const el=$('gcStats');el.textContent=t;el.style.display='block'});
+})();
 </script>
 </body>
 </html>
